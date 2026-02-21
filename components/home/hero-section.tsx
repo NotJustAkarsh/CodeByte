@@ -5,7 +5,7 @@ import { cn } from "@/lib/utils";
 
 const HeroSection = () => {
   return (
-    <section className="relative min-h-[600px] w-full overflow-hidden bg-gradient-to-br from-purple-950 via-indigo-950 to-indigo-950">
+    <section className="relative mx-auto min-h-full w-full overflow-hidden bg-gradient-to-br from-purple-950 via-indigo-950 to-indigo-950">
       {/* Gradient overlay */}
       <div className="absolute inset-0 before:absolute before:left-1/4 before:top-0 before:h-[500px] before:w-[500px] before:rounded-full before:bg-gradient-to-r before:from-violet-600/20 before:to-indigo-600/20 before:blur-3xl" />
 
@@ -25,7 +25,7 @@ const HeroSection = () => {
             perspectives on technology, lifestyle, and innovation.
           </p>
 
-          <div className="flex flex-col items-center gap-4 sm:flex-row md:justify-start">
+          <div className="flex flex-col items-center gap-4 sm:flex-row lg:justify-start justify-center">
             <Button size="lg" className="rounded-full px-8 py-6 text-lg">
               Start Reading
             </Button>

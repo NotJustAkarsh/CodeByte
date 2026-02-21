@@ -2,7 +2,6 @@
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { useSearchParams } from "next/navigation";
-import React from "react";
 
 const SearchInput = () => {
   const params = useSearchParams();
@@ -16,7 +15,7 @@ const SearchInput = () => {
           name="search"
           defaultValue={params.get("search") || ""}
           placeholder="Search articles..."
-          className="pl-10 w-48 focus-visible:ring-1"
+          className="text-sm pl-8 w-35 focus-visible:ring-1"
         />
       </div>
     </form>
