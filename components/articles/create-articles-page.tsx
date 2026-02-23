@@ -17,7 +17,13 @@ import dynamic from "next/dynamic";
 import { Button } from "../ui/button";
 import { createArticle } from "@/actions/create-article";
 
-const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+const ReactQuill = dynamic(
+  () => import("react-quill-new"),
+  {
+    ssr: false,
+    loading: () => <p>Loading editor...</p>,
+  }
+);
 
 const CreateArticlesPage = () => {
   const [content, setContent] = useState("");
