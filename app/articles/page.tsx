@@ -1,20 +1,34 @@
 import AllArticlePage from "@/components/articles/all-article-page";
+import { ArticlesNavbar } from "@/components/articles/articles-navbar";
 import ArticlesSearchInput from "@/components/articles/articles-search-input";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { fetchArticleByQuery } from "@/lib/query/fetch-article";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import Link from "next/link";
 import { Suspense } from "react";
 
 type SearchPageProps = {
-  searchParams: Promise<{ search?: string }>;
+  searchParams: Promise<{ search?: string; page?: string }>;
 };
+
+const ITEMS_PER_PAGE = 3;
 
 const page: React.FC<SearchPageProps> = async ({ searchParams }) => {
   const searchText = (await searchParams).search || "";
+  const currentPage = Number((await searchParams).page) || 1;
+
+  const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+  const take = ITEMS_PER_PAGE;
+
+  const { articles, total } = await fetchArticleByQuery(searchText, skip, take);
+
+  const totalPages = Math.ceil(total / ITEMS_PER_PAGE);
 
   return (
     <div className="min-h-screen bg-background">
+      <ArticlesNavbar />
       <main className="container mx-auto px-4 py-12 sm:px-6 lg:text-5xl">
         {/* Page Header */}
 
@@ -25,35 +39,40 @@ const page: React.FC<SearchPageProps> = async ({ searchParams }) => {
           <ArticlesSearchInput />
         </div>
         {/* All Article Cards */}
-        <Suspense fallback={<AllArticlesPageSkeleton/>}>
-          <AllArticlePage searchText={searchText} />
+        <Suspense fallback={<AllArticlesPageSkeleton />}>
+          <AllArticlePage articles={articles} />
         </Suspense>
 
         {/* Pagination */}
 
         <div className="mt-12 flex justify-center gap-2">
-          <Button variant={"ghost"} size={"sm"}>
-            <ArrowLeft />
-            Prev
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            1
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            2
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            3
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            4
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            5
-          </Button>
-          <Button variant={"ghost"} size={"sm"}>
-            Next <ArrowRight />
-          </Button>
+          <Link href={`?searh=${searchText}&page=${currentPage - 1}`} passHref>
+            <Button variant={"ghost"} size={"sm"}>
+              <ArrowLeft />
+              Prev
+            </Button>
+          </Link>
+
+          {Array.from({ length: totalPages }).map((_, index) => (
+            <Link
+              href={`?searh=${searchText}&page=${index + 1}`}
+              passHref
+              key={index}
+            >
+              <Button variant={`${currentPage === index+1 ? 'destructive':'ghost'}`} size={"sm"}>
+                {index + 1}
+              </Button>
+            </Link>
+          ))}
+          <Link href={`?searh=${searchText}&page=${currentPage + 1}`} passHref>
+            <Button
+              disabled={currentPage === totalPages}
+              variant={"ghost"}
+              size={"sm"}
+            >
+              Next <ArrowRight />
+            </Button>
+          </Link>
         </div>
       </main>
     </div>
@@ -61,7 +80,6 @@ const page: React.FC<SearchPageProps> = async ({ searchParams }) => {
 };
 
 export default page;
-
 
 export function AllArticlesPageSkeleton() {
   return (

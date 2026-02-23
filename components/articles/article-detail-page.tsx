@@ -5,6 +5,7 @@ import CommentList from "./comments/comment-list";
 import CommentInput from "./comments/comment-input";
 import prisma from "@/lib/prisma";
 import { auth } from "@clerk/nextjs/server";
+import { ArticlesNavbar } from "./articles-navbar";
 
 type ArticleDetailPageProps = {
   article: Prisma.ArticlesGetPayload<{
@@ -50,6 +51,7 @@ const ArticleDetailPage: React.FC<ArticleDetailPageProps> = async ({
 
   return (
     <div className="min-h-screen bg-background">
+      <ArticlesNavbar/>
       <main className="container mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <article className="mx-auto max-w-3xl">
           <header className="mb-8">
