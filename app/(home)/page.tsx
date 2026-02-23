@@ -4,6 +4,8 @@ import HeroSection from "@/components/home/hero-section";
 import { TopArticles } from "@/components/home/top-articles";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Suspense } from "react";
+import { AllArticlesPageSkeleton } from "../articles/page";
 
 const page = async () => {
   return (
@@ -22,8 +24,9 @@ const page = async () => {
           </div>
 
           {/* Top Articles */}
-
-          <TopArticles />
+          <Suspense fallback={<AllArticlesPageSkeleton/>}>
+            <TopArticles />
+          </Suspense>
 
           <div className="mt-12 text-center">
             <Link href={"/articles"}>

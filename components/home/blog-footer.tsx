@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Mail } from "lucide-react";
 import { Linkedin, Github, Twitter } from "lucide-react";
+import Link from "next/link";
 
 export function BlogFooter() {
   return (
@@ -11,10 +12,12 @@ export function BlogFooter() {
           {/* Branding Section */}
           <div className="md:col-span-2 lg:col-span-2">
             <h2 className="text-2xl font-bold">
-              <span className="bg-gradient-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
-                Code
-              </span>
-              <span className="text-foreground">Byte</span>
+              <Link href={"/"}>
+                <span className="bg-linear-to-r from-purple-600 to-indigo-600 dark:from-purple-400 dark:to-indigo-400 bg-clip-text text-transparent">
+                  Code
+                </span>
+                <span className="text-foreground">Byte</span>
+              </Link>
             </h2>
             <p className="mt-4 text-muted-foreground">
               Where ideas meet innovation. Dive into a world of insightful
